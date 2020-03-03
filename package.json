@@ -1,0 +1,19 @@
+{
+  "name": "cashe",
+  "version": "1.0.0",
+  "description": "stock trading made simple",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scoronelhamilton/cashe.git"
+  },
+  "author": "Sebastian Coronel Hamilton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scoronelhamilton/cashe/issues"
+  },
+  "homepage": "https://github.com/scoronelhamilton/cashe#readme"
+}
