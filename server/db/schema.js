@@ -19,6 +19,7 @@ const transactionSchema = new Schema({
   ticker: String,
   shares: Number,
   costPerShare: Number,
+  netAmount: Number,
   date: { type: Date, default: Date.now() }
 });
 
