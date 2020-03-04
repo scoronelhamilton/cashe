@@ -14,10 +14,11 @@ const userSchema = new Schema({
 });
 
 const transactionSchema = new Schema({
-  artworkId: String,
-  bidderId: String,
-  ownerId: String,
-  value: Number,
+  type: String,
+  userId: String,
+  ticker: String,
+  shares: Number,
+  costPerShare: Number,
   date: { type: Date, default: Date.now() }
 });
 
