@@ -8,18 +8,19 @@ exports.verify = (req, res) => {
 
 exports.register = (req, res) => {
   const { name, lastName, email, password } = req.body;
+  const formatedEmail = email.toLowerCase();
   const salt = 10;
   const hashedPassword = bcrypt.hashSync(password, salt);
   const tokenExpiration = 900; // 15 minutes;
 
-  User.findUser(email)
+  User.findUser(formatedEmail)
     .then(user => {
       if (user) return res.sendStatus(409);
 
       User.register({
-        name,
-        lastName,
-        email,
+        name: name.toLowerCase(),
+        lastName: lastName.toLowerCase(),
+        email: formatedEmail,
         password: hashedPassword
       }).then(({ _id }) => {
         const secret = process.env.AUTH_SECRET;

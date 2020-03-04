@@ -8,7 +8,8 @@ const userSchema = new Schema({
   cash: { type: Number, default: 5000 },
   portfolio: {
     type: Map,
-    of: String
+    of: String,
+    default: {}
   }
 });
 
