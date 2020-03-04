@@ -5,7 +5,7 @@ const userSchema = new Schema({
   lastName: String,
   email: String,
   password: String,
-  cash: Number,
+  cash: { type: Number, default: 5000 },
   portfolio: {
     type: Map,
     of: String
