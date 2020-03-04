@@ -40,7 +40,7 @@ exports.login = (req, res) => {
   const { email, password } = req.body;
   const tokenExpiration = 900; // 15 minutes;
 
-  User.findUser(email).then(user => {
+  User.findUser(email.toLowerCase()).then(user => {
     if (!user) return res.sendStatus(404);
 
     const isPasswordValid = bcrypt.compareSync(password, user.password);
