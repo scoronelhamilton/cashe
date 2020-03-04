@@ -1,5 +1,7 @@
 const { User } = require('../db/schema');
 
+exports.findUser = email => User.find({ email: email }, 'email password');
+
 exports.getInfo = id =>
   User.find({ _id: id }, 'name cash portfolio')
     .then(info => info)
