@@ -1,7 +1,10 @@
+const http = require('http');
 const express = require('express');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const http = require('http');
+const env = require('dotenv').config();
+
 const router = require('./routes/routes');
 const db = require('./db/index');
 
@@ -12,6 +15,7 @@ const PORT = process.env.PORT || 8080;
 // Middleware
 if (process.env.NODE_ENV === 'dev') app.use(morgan('dev'));
 if (process.env.NODE_ENV === 'prod') app.use(morgan('tiny'));
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use('/', router);
 

@@ -14,7 +14,7 @@ exports.register = (req, res) => {
 
   User.findUser(email)
     .then(user => {
-      if (user.length) return res.sendStatus(409);
+      if (user) return res.sendStatus(409);
 
       User.register({
         name,
@@ -40,7 +40,7 @@ exports.login = (req, res) => {
   const tokenExpiration = 900; // 15 minutes;
 
   User.findUser(email).then(user => {
-    if (!user.length) return res.sendStatus(404);
+    if (!user) return res.sendStatus(404);
 
     const isPasswordValid = bcrypt.compareSync(password, user.password);
     if (!isPasswordValid)
