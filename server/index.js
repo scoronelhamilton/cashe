@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const http = require('http');
+const router = require('./routes/routes');
 const db = require('./db/index');
 
 const app = express();
@@ -12,16 +13,16 @@ const PORT = process.env.PORT || 8080;
 if (process.env.NODE_ENV === 'dev') app.use(morgan('dev'));
 if (process.env.NODE_ENV === 'prod') app.use(morgan('tiny'));
 app.use(bodyParser.json());
+app.use('/', router);
 
 // Initialization
 db.connect()
   .then(() => {
     httpServer.listen(PORT, e => {
       if (e) throw new Error(e.message);
-      else {
-        if (process.env.NODE_ENV !== 'test') {
-          console.log(`Server listening on port ${PORT}...`);
-        }
+
+      if (process.env.NODE_ENV !== 'test') {
+        console.log(`Server listening on port ${PORT}...`);
       }
     });
   })
