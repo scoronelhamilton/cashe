@@ -15,7 +15,8 @@ router.get('/user', verifyToken, User.getInfo);
 router.get('/transactions', verifyToken, Transaction.getAll);
 router.post('/transaction', verifyToken, Transaction.addOne);
 
-router.get('/symbols', StockData.getSymbols);
-router.get('/prices', StockData.getLastPrice);
+router.get('/symbols', verifyToken, StockData.getSymbols);
+router.get('/opening-prices', verifyToken, StockData.getOpeningPrices);
+router.get('/prices', verifyToken, StockData.getLastPrice);
 
 module.exports = router;
