@@ -1,10 +1,8 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useInput } from '../../hooks/input-hooks';
-import { registerUser, saveToken } from '../../auth/index';
+import { registerUser } from '../../auth/index';
 
-const SignUp = ({ setShowLogin, setRedirect }) => {
-  const history = useHistory();
+const SignUp = ({ setShowLogin, handleSuccessAuth }) => {
   const { value: name, bind: bindName, reset: resetName } = useInput('');
   const { value: lastName, bind: bindLastName, reset: resetLastName } = useInput('');
   const { value: email, bind: bindEmail, reset: resetEmail } = useInput('');
@@ -25,9 +23,7 @@ const SignUp = ({ setShowLogin, setRedirect }) => {
     const userInfo = { name, lastName, email, password };
     registerUser(userInfo)
       .then(res => {
-        saveToken(res.token);
-        setRedirect(false);
-        history.push('/');
+        handleSuccessAuth(res.token);
       })
       .catch(err => console.error(err.message));
   };

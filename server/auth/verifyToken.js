@@ -13,6 +13,7 @@ const verifyToken = (req, res, next) => {
   const secret = process.env.AUTH_SECRET;
   jwt.verify(token, secret, (err, decoded) => {
     if (err) return res.sendStatus(401);
+
     req.userId = decoded.id;
     next();
   });

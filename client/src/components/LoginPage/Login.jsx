@@ -1,22 +1,17 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useInput } from '../../hooks/input-hooks';
-import { logIn, saveToken } from '../../auth/index';
+import { logIn } from '../../auth/index';
 
-const LogIn = ({ setShowLogin, setRedirect }) => {
+const LogIn = ({ setShowLogin, handleSuccessAuth }) => {
   const { value: email, bind: bindEmail, reset: resetEmail } = useInput('');
   const { value: password, bind: bindPassword, reset: resetPassword } = useInput('');
-
-  const history = useHistory();
 
   const handleSubmit = e => {
     e.preventDefault();
 
     logIn(email, password)
       .then(({ data }) => {
-        saveToken(data.token);
-        setRedirect(false);
-        history.push('/');
+        handleSuccessAuth(data.token);
       })
       .catch(e => resetPassword());
   };
