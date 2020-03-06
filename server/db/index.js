@@ -6,7 +6,7 @@ exports.connect = () =>
   mongoose
     .connect(host, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     })
     .then(() => console.log('Connected to MongoDB'))
     .catch(e => {

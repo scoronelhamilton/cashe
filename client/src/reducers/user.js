@@ -1,12 +1,12 @@
 const initialState = {
   isLoggedIn: false,
-  userInfo: {}
+  userInfo: {},
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'LOG_IN': {
-      return { ...state };
+    case 'SET_LOGGED_IN': {
+      return { ...state, isLoggedIn: action.payload };
     }
     default:
       return state;

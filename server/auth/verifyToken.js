@@ -5,11 +5,14 @@ const verifyToken = (req, res, next) => {
   if (!authorization) return res.sendStatus(401);
 
   // Auth Header Format: Bearer {token}
-  const token = authorization.split(' ')[1];
+  const split = authorization.split(' ');
+  const type = split[0];
+  const token = split[1];
+  if (type !== 'Bearer') return res.sendStatus(401);
+
   const secret = process.env.AUTH_SECRET;
   jwt.verify(token, secret, (err, decoded) => {
     if (err) return res.sendStatus(401);
-
     req.userId = decoded.id;
     next();
   });

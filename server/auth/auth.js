@@ -21,11 +21,11 @@ exports.register = (req, res) => {
         name: name.toLowerCase(),
         lastName: lastName.toLowerCase(),
         email: formatedEmail,
-        password: hashedPassword
+        password: hashedPassword,
       }).then(({ _id }) => {
         const secret = process.env.AUTH_SECRET;
         const token = jwt.sign({ id: _id }, secret, {
-          expiresIn: tokenExpiration
+          expiresIn: tokenExpiration,
         });
         res.status(201).json({ auth: true, token: token });
       });
@@ -41,20 +41,19 @@ exports.login = (req, res) => {
   const tokenExpiration = 900; // 15 minutes;
 
   User.findUser(email.toLowerCase()).then(user => {
-    if (!user) return res.sendStatus(404);
+    if (!user) return res.sendStatus(401);
 
     const isPasswordValid = bcrypt.compareSync(password, user.password);
-    if (!isPasswordValid)
-      return res.status(401).send({ auth: false, token: null });
+    if (!isPasswordValid) return res.sendStatus(401);
 
     const secret = process.env.AUTH_SECRET;
     const token = jwt.sign({ id: user._id }, secret, {
-      expiresIn: tokenExpiration
+      expiresIn: tokenExpiration,
     });
     res.status(201).json({ auth: true, token: token });
   });
 };
 
 exports.logout = (req, res) => {
-  res.status(200).send({ auth: false, token: null });
+  res.sendStatus(200);
 };

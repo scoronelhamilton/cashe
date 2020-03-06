@@ -12,5 +12,6 @@ router.post('/logout', Auth.logout);
 router.get('/user', verifyToken, User.getInfo);
 
 router.get('/transactions', verifyToken, Transaction.getAll);
+router.post('/transaction', verifyToken, Transaction.addOne);
 
 module.exports = router;
