@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Auth = require('../auth/auth');
 const User = require('../controllers/user');
 const Transaction = require('../controllers/transaction');
+const StockData = require('../controllers/stockData.js');
 const verifyToken = require('../auth/verifyToken');
 
 router.get('/verify', verifyToken, Auth.verify);
@@ -13,5 +14,8 @@ router.get('/user', verifyToken, User.getInfo);
 
 router.get('/transactions', verifyToken, Transaction.getAll);
 router.post('/transaction', verifyToken, Transaction.addOne);
+
+router.get('/symbols', StockData.getSymbols);
+router.get('/prices', StockData.getLastPrice);
 
 module.exports = router;
