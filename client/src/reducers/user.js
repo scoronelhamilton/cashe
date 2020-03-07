@@ -1,6 +1,11 @@
 const initialState = {
   isLoggedIn: false,
-  userInfo: {},
+  userInfo: {
+    portfolio: {
+      AAPL: 5,
+      TSLA: 10,
+    },
+  },
 };
 
 export default (state = initialState, action) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from './NavBar/index';
-import Portfolio from './Portfolio/index';
+import PortfolioContainer from '../../containers/Portfolio';
 import Transactions from './Transactions/index';
 import { getUserInfo, getAllSymbols } from '../../api/helpers';
 
@@ -19,7 +19,7 @@ const Home = ({ setUserInfo, setSymbolsList }) => {
   return (
     <>
       <NavBar setShowPortfolio={setShowPortfolio} />
-      {showPortfolio ? <Portfolio /> : <Transactions />}
+      {showPortfolio ? <PortfolioContainer /> : <Transactions />}
       {/* <a href="https://iexcloud.io">Data provided by IEX Cloud</a> */}
     </>
   );
