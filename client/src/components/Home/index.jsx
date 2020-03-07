@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import NavBar from './NavBar/index';
 import PortfolioContainer from '../../containers/Portfolio';
 import Transactions from './Transactions/index';
@@ -10,10 +11,11 @@ const Home = ({ setUserInfo, setSymbolsList }) => {
   useEffect(() => {
     getUserInfo()
       .then(({ data }) => setUserInfo(data))
-      .catch(e => console.error(e.message));
+      .catch(err => console.error(err));
+
     getAllSymbols()
       .then(({ data }) => setSymbolsList(data))
-      .catch(e => console.error(e.message));
+      .catch(err => console.error(err));
   }, []);
 
   return (

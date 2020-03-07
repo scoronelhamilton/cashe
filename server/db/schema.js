@@ -8,19 +8,19 @@ const userSchema = new Schema({
   cash: { type: Number, default: 5000 },
   portfolio: {
     type: Map,
-    of: String,
-    default: {}
-  }
+    of: Number,
+    default: {},
+  },
 });
 
 const transactionSchema = new Schema({
   type: String,
   userId: String,
-  ticker: String,
-  shares: Number,
-  costPerShare: Number,
-  netAmount: Number,
-  date: { type: Date, default: Date.now() }
+  symbol: String,
+  amount: Number,
+  price: Number,
+  netValue: Number,
+  date: { type: Date, default: Date.now() },
 });
 
 exports.User = model('User', userSchema);

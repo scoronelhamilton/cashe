@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useInput } from '../../../hooks/input-hooks';
 import { isSymbolPresent } from '../../../helpers/index';
+import { addStock } from '../../../api/helpers';
 
 const TradeForm = ({ cash, symbols }) => {
-  const { value: symbol, bind: bindSymbol, reset: resetSymbol } = useInput('');
-  const { value: amount, bind: bindAmount, reset: resetAmount } = useInput('');
+  const [symbol, setSymbol] = useState('');
+  const [amount, setAmount] = useState('');
 
   const [symbolIsValid, setSymbolIsValid] = useState(false);
   const [amountIsValid, setAmountIsValid] = useState(false);
@@ -21,8 +21,7 @@ const TradeForm = ({ cash, symbols }) => {
   }, [symbolIsValid, amountIsValid]);
 
   const validateSymbol = () => {
-    const formatedSymbol = symbol.replace(/ /g, '').toUpperCase();
-    if (isSymbolPresent(symbols, formatedSymbol)) {
+    if (isSymbolPresent(symbols, symbol)) {
       setSymbolIsValid(true);
     } else {
       setSymbolIsValid(false);
@@ -30,9 +29,7 @@ const TradeForm = ({ cash, symbols }) => {
   };
 
   const validateAmount = () => {
-    // Check if is whole number
-    const formatedAmount = Number(amount);
-    if (formatedAmount % 1 === 0) {
+    if (amount % 1 === 0) {
       setAmountIsValid(true);
     } else {
       setAmountIsValid(false);
@@ -40,8 +37,8 @@ const TradeForm = ({ cash, symbols }) => {
   };
 
   const resetForm = () => {
-    resetSymbol();
-    resetAmount();
+    setSymbol('');
+    setAmount('');
     setTransactionIsValid(false);
     setSymbolIsValid(false);
     setAmountIsValid(false);
@@ -52,41 +49,61 @@ const TradeForm = ({ cash, symbols }) => {
     setTimeoutId(setTimeout(cb, 1000));
   };
 
+  const handleInputChange = target => {
+    const { name, value } = target;
+    if (name === 'symbol') {
+      setSymbol(value.replace(/ /g, '').toUpperCase());
+    } else if (name === 'amount') {
+      setAmount(Number(value));
+    }
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('here');
-    if (!transactionIsValid) return;
+    // if (!transactionIsValid) return;
 
-    console.log('valid');
-    //   // add transaction to db
-    resetForm();
+    addStock(symbol, amount)
+      .then(() => {
+        console.log('success');
+        resetForm();
+      })
+      .catch(err => {
+        setAmount('');
+        setTransactionIsValid(false);
+        setAmountIsValid(false);
+        console.error(err.message);
+      });
   };
 
   return (
     <div>
-      <h3>{`Cash: $${cash}`}</h3>
+      <h3>{cash ? `Cash: $${cash}` : ''}</h3>
       <form id="trade-form" onSubmit={handleSubmit}>
         <label>
           Symbol
           <input
             type="text"
+            name="symbol"
+            value={symbol}
             placeholder="AAPL"
+            onChange={({ target }) => handleInputChange(target)}
             onKeyUp={() => handleKeyUp(validateSymbol)}
-            {...bindSymbol}
           />
         </label>
         <label>
           Amount
           <input
             type="text"
+            name="amount"
+            value={amount}
             placeholder="1000"
-            disabled={!symbolIsValid}
+            // disabled={!symbolIsValid}
+            onChange={({ target }) => handleInputChange(target)}
             onKeyUp={() => handleKeyUp(validateAmount)}
-            {...bindAmount}
           />
         </label>
       </form>
-      <button type="submit" form="trade-form" disabled={!transactionIsValid}>
+      <button type="submit" form="trade-form" disabled={false}>
         Buy
       </button>
     </div>

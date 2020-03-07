@@ -21,3 +21,10 @@ export const getCurrentPrices = symbols => {
     params: { symbols },
   });
 };
+
+export const addStock = (symbol, amount) => {
+  return Axios.post('/stock', {
+    symbol,
+    amount,
+  });
+};

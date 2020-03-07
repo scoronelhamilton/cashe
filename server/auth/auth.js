@@ -40,18 +40,26 @@ exports.login = (req, res) => {
   const { email, password } = req.body;
   const tokenExpiration = 900; // 15 minutes;
 
-  User.findUser(email.toLowerCase()).then(user => {
-    if (!user) return res.sendStatus(401);
+  User.findUser(email.toLowerCase())
+    .then(user => {
+      if (!user) {
+        console.log(email, password);
+        return res.sendStatus(401);
+      }
 
-    const isPasswordValid = bcrypt.compareSync(password, user.password);
-    if (!isPasswordValid) return res.sendStatus(401);
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
+      if (!isPasswordValid) return res.sendStatus(401);
 
-    const secret = process.env.AUTH_SECRET;
-    const token = jwt.sign({ id: user._id }, secret, {
-      expiresIn: tokenExpiration,
+      const secret = process.env.AUTH_SECRET;
+      const token = jwt.sign({ id: user._id }, secret, {
+        expiresIn: tokenExpiration,
+      });
+      res.status(201).json({ auth: true, token: token });
+    })
+    .catch(err => {
+      console.error(err);
+      res.sendStatus(500);
     });
-    res.status(201).json({ auth: true, token: token });
-  });
 };
 
 exports.logout = (req, res) => {

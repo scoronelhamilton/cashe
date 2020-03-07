@@ -11,8 +11,9 @@ router.post('/login', Auth.login);
 router.post('/logout', Auth.logout);
 
 router.get('/user', verifyToken, User.getInfo);
+router.post('/stock', verifyToken, User.buyStock);
 
-router.get('/transactions', verifyToken, Transaction.getAll);
+router.get('/transactions', Transaction.getAll);
 router.post('/transaction', verifyToken, Transaction.addOne);
 
 router.get('/symbols', verifyToken, StockData.getSymbols);
