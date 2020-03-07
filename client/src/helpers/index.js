@@ -1,4 +1,8 @@
-/* 
+import formatCurrency from 'format-currency';
+import moment from 'moment';
+
+export const isSymbolPresent = (symbols, target) => {
+  /* 
   Symbols are sorted -> perform binary search
   Symbol Format: {
     "symbol": "AAPL",
@@ -7,7 +11,6 @@
     }
   */
 
-export const isSymbolPresent = (symbols, target) => {
   if (!Array.isArray(symbols) || typeof target !== 'string' || target.length === 0) {
     return false;
   }
@@ -36,4 +39,13 @@ export const isSymbolPresent = (symbols, target) => {
   }
 
   return false;
+};
+
+export const convertToCurrency = num => {
+  let opts = { format: '%s%v', symbol: '$' };
+  return formatCurrency(num, opts);
+};
+
+export const formatDate = date => {
+  return moment(date).format('MM/DD/YYYY');
 };
