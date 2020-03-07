@@ -1,11 +1,24 @@
 import React from 'react';
 
 const TransactionList = ({ transactions }) => {
-  const getTransaction = txn => {
+  const getHeaders = () => {
     return (
       <tr>
-        {`${txn.type.toUpperCase()} (${txn.ticker.toUpperCase()}) - ${txn.shares} Shares @
-        ${txn.costPerShare.toFixed(2)}`}
+        <th>Type</th>
+        <th>Symbol</th>
+        <th>Shares</th>
+        <th>Price</th>
+      </tr>
+    );
+  };
+  const getTransaction = txn => {
+    const { _id, type, symbol, amount, price } = txn;
+    return (
+      <tr key={_id}>
+        <td>{type.toUpperCase()}</td>
+        <td>{symbol.toUpperCase()}</td>
+        <td>{amount}</td>
+        <td>{`$${price.toFixed(2)}`}</td>
       </tr>
     );
   };
@@ -13,6 +26,7 @@ const TransactionList = ({ transactions }) => {
   return (
     <div>
       <table>
+        <thead>{getHeaders()}</thead>
         <tbody>{transactions.map(txn => getTransaction(txn))}</tbody>
       </table>
     </div>

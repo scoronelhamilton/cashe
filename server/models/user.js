@@ -15,6 +15,7 @@ exports.getInfo = id =>
 
 exports.addStock = async data => {
   const { userId, symbol, amount, netValue } = data;
+
   try {
     const user = await User.findOne({ _id: userId });
     const currentStockAmount = user.portfolio.get(symbol);
@@ -26,7 +27,6 @@ exports.addStock = async data => {
     }
 
     user.cash -= netValue;
-    await Transaction.create(data);
     user.save();
   } catch (err) {
     throw err;

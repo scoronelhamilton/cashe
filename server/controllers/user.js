@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Transaction = require('../models/transaction');
 const { getLastPrice } = require('../services/iexAPI');
 
 exports.getInfo = (req, res) => {
@@ -32,6 +33,7 @@ exports.buyStock = (req, res) => {
       };
 
       User.addStock(data)
+        .then(() => Transaction.addOne(data))
         .then(() => res.sendStatus(201))
         .catch(err => {
           throw err;

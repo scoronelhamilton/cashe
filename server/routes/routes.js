@@ -13,8 +13,7 @@ router.post('/logout', Auth.logout);
 router.get('/user', verifyToken, User.getInfo);
 router.post('/stock', verifyToken, User.buyStock);
 
-router.get('/transactions', Transaction.getAll);
-router.post('/transaction', verifyToken, Transaction.addOne);
+router.get('/transactions', verifyToken, Transaction.getAll);
 
 router.get('/symbols', verifyToken, StockData.getSymbols);
 router.get('/opening-prices', verifyToken, StockData.getOpeningPrices);
