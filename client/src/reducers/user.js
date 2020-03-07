@@ -1,10 +1,7 @@
 const initialState = {
   isLoggedIn: false,
   userInfo: {
-    portfolio: {
-      AAPL: 5,
-      TSLA: 10,
-    },
+    portfolio: {},
   },
 };
 

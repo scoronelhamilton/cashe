@@ -42,10 +42,7 @@ exports.login = (req, res) => {
 
   User.findUser(email.toLowerCase())
     .then(user => {
-      if (!user) {
-        console.log(email, password);
-        return res.sendStatus(401);
-      }
+      if (!user) return res.sendStatus(401);
 
       const isPasswordValid = bcrypt.compareSync(password, user.password);
       if (!isPasswordValid) return res.sendStatus(401);
