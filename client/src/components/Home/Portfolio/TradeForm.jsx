@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useInput } from '../../../hooks/input-hooks';
 import { isSymbolPresent, convertToCurrency } from '../../../helpers/index';
-import { addStock } from '../../../api/helpers';
+import { buyStock } from '../../../api/helpers';
 
-const TradeForm = ({ cash, symbols }) => {
+const TradeForm = ({ cash, symbols, addStock }) => {
   const { value: symbol, bind: bindSymbol, reset: resetSymbol } = useInput('');
   const { value: amount, bind: bindAmount, reset: resetAmount } = useInput('');
 
@@ -57,8 +57,11 @@ const TradeForm = ({ cash, symbols }) => {
 
     const formatedSymbol = symbol.replace(/ /g, '').toUpperCase();
     const formatedAmount = Number(amount);
-    addStock(formatedSymbol, formatedAmount)
-      .then(() => resetForm())
+    buyStock(formatedSymbol, formatedAmount)
+      .then(({ data }) => {
+        addStock(data);
+        resetForm();
+      })
       .catch(err => {
         resetAmount();
         setTransactionIsValid(false);

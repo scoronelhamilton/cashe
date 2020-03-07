@@ -34,7 +34,7 @@ exports.buyStock = (req, res) => {
 
       User.addStock(data)
         .then(() => Transaction.addOne(data))
-        .then(() => res.sendStatus(201))
+        .then(() => res.status(201).json(data))
         .catch(err => {
           throw err;
         });

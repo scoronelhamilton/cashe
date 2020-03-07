@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import StockListContainer from '../../../containers/StockList';
 import TradeFormContainer from '../../../containers/TradeForm';
 import { getCurrentPrices } from '../../../api/helpers';
 
 const Portfolio = ({ portfolio, setCurrentPrices }) => {
-  const [intervalId, setIntervalId] = useState(null);
+  const intervalIds = [];
 
   useEffect(() => {
     const symbols = Object.keys(portfolio).join(',');
     if (symbols.length) fetchData(symbols);
 
-    if (intervalId) clearInterval(intervalId);
-    setIntervalId(setInterval(() => fetchData(symbols), 10000));
-    return () => clearInterval(intervalId);
-  }, []);
+    cleanup(intervalIds);
+    intervalIds.push(setInterval(() => fetchData(symbols), 8000));
+    return () => cleanup(intervalIds);
+  }, [portfolio]);
+
+  const cleanup = ids => {
+    ids.forEach(id => {
+      clearInterval(id);
+    });
+  };
 
   const fetchData = symbols => {
     getCurrentPrices(symbols)

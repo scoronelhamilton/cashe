@@ -22,7 +22,7 @@ export const getCurrentPrices = symbols => {
   });
 };
 
-export const addStock = (symbol, amount) => {
+export const buyStock = (symbol, amount) => {
   return Axios.post('/stock', {
     symbol,
     amount,
