@@ -8,6 +8,9 @@ export default (state = initialState, action) => {
     case 'SET_LOGGED_IN': {
       return { ...state, isLoggedIn: action.payload };
     }
+    case 'SET_USER_INFO': {
+      return { ...state, userInfo: action.payload };
+    }
     default:
       return state;
   }

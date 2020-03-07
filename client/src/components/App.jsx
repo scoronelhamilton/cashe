@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import LoginPage from '../components/LoginPage/index';
-import Home from './Home/index';
+import HomeContainer from '../containers/Home';
 import { verifyUser, setHeaders } from '../auth/index';
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
   const renderRoutes = () => {
     if (isLoading) return null;
     if (redirect) return <Redirect to="/login" />;
-    return <Home to="/" />;
+    return <HomeContainer to="/home" />;
   };
 
   return (
@@ -30,7 +30,8 @@ const App = () => {
         <Route path="/login">
           <LoginPage setRedirect={setRedirect} />
         </Route>
-        <Route path="/" render={renderRoutes}></Route>
+        <Redirect exact from="/" to="/home" />
+        <Route path="/home" render={renderRoutes}></Route>
       </Switch>
     </Router>
   );

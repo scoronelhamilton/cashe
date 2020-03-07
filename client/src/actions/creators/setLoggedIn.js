@@ -1,6 +1,8 @@
 import { SET_LOGGED_IN } from '../index';
 
-export default isLoggedIn => ({
+const setIsLoggedIn = isLoggedIn => ({
   type: SET_LOGGED_IN,
   payload: isLoggedIn,
 });
+
+export default setIsLoggedIn;
