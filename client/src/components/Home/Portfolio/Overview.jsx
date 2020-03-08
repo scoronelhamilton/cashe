@@ -1,6 +1,12 @@
 import React from 'react';
+import { convertToCurrency } from '../../../helpers/index';
 
-const Overview = () => {
+const Overview = ({ user, setModalIsOpen }) => {
+  const getTotalStocks = () =>
+    !user ? '' : `Total stocks: ${Object.keys(user.portfolio).length}`;
+
+  const getAvailableCash = () =>
+    !user ? '' : `Available cash: ${convertToCurrency(user.cash)}`;
   return (
     <div id="overview-container">
       <div className="upper-section-ovw">
@@ -12,11 +18,12 @@ const Overview = () => {
       </div>
       <div className="lower-section-ovw">
         <div className="portfolio-details">
-          <p>Stocks: 5</p>
+          <p>{getTotalStocks()}</p>
           <p>Return: 5%</p>
+          <p>{getAvailableCash()}</p>
         </div>
         <div className="trade-buttons">
-          <button type="button" id="buy-btn">
+          <button className="buy-btn" type="button" onClick={() => setModalIsOpen(true)}>
             Buy
           </button>
         </div>

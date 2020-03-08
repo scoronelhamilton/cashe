@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import TradeForm from '../../components/Home/Portfolio/TradeForm';
+import TradeForm from '../../components/Home/TradeModal/TradeForm';
 import addStock from '../../actions/creators/addStock';
 
 const mapStateToProps = store => ({

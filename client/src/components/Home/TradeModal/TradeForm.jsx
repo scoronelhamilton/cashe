@@ -72,31 +72,35 @@ const TradeForm = ({ cash, symbols, addStock }) => {
 
   return (
     <div id="trade-form-container">
-      <h3>{cash ? `Cash: ${convertToCurrency(cash)}` : ''}</h3>
-      <form id="trade-form" onSubmit={handleSubmit}>
-        <label>
-          Symbol
+      <h3>{cash ? `Wallet: ${convertToCurrency(cash)}` : ''}</h3>
+      <div className="trade-form-wrapper">
+        <form className="trade-form" onSubmit={handleSubmit}>
+          <label>Symbol</label>
           <input
             type="text"
-            placeholder="AAPL"
+            placeholder="e.g. AAPL"
             onKeyUp={() => handleKeyUp(validateSymbol)}
             {...bindSymbol}
           />
-        </label>
-        <label>
-          Amount
+
+          <label>Amount</label>
           <input
             type="text"
-            placeholder="1000"
+            placeholder="e.g. 50"
             disabled={!symbolIsValid}
             onKeyUp={() => handleKeyUp(validateAmount)}
             {...bindAmount}
           />
-        </label>
-      </form>
-      <button type="submit" form="trade-form" disabled={!transactionIsValid}>
-        Buy
-      </button>
+        </form>
+        <button
+          className="buy-btn"
+          type="submit"
+          form="trade-form"
+          disabled={!transactionIsValid}
+        >
+          Buy
+        </button>
+      </div>
     </div>
   );
 };

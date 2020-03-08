@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import NavBar from './NavBar/index';
+import TradeModal from './TradeModal/index';
 import PortfolioContainer from '../../containers/Portfolio';
 import Transactions from './Transactions/index';
 import { getUserInfo, getAllSymbols, getOpeningPrices } from '../../api/helpers';
 
 const Home = ({ setUserInfo, setSymbolsList, portfolio }) => {
   const [showPortfolio, setShowPortfolio] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     getUserInfo()
@@ -28,8 +30,13 @@ const Home = ({ setUserInfo, setSymbolsList, portfolio }) => {
     <div id="app-container">
       <NavBar setShowPortfolio={setShowPortfolio} />
       <div id="main-container">
-        {showPortfolio ? <PortfolioContainer /> : <Transactions />}
+        {showPortfolio ? (
+          <PortfolioContainer setModalIsOpen={setModalIsOpen} />
+        ) : (
+          <Transactions />
+        )}
       </div>
+      <TradeModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
     </div>
   );
 };

@@ -4,6 +4,10 @@ const initialState = {
     symbol: '',
     price: 0,
   },
+  openingPrices: {
+    latestTradingDay: '',
+    prices: {},
+  },
 };
 
 export default (state = initialState, action) => {

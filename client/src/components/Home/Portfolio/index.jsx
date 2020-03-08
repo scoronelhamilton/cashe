@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import StockListContainer from '../../../containers/StockList';
-import TradeFormContainer from '../../../containers/TradeForm';
-import Overview from './Overview';
+// import TradeFormContainer from '../../../containers/TradeForm';
+import OverviewContainer from './../../../containers/Portfolio/Overview';
 import { getCurrentPrices } from '../../../api/helpers';
 
-const Portfolio = ({ portfolio, setCurrentPrices }) => {
+const Portfolio = ({ portfolio, setCurrentPrices, setModalIsOpen }) => {
   const intervalIds = [];
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const Portfolio = ({ portfolio, setCurrentPrices }) => {
 
   return (
     <div id="portfolio-container">
-      <Overview />
+      <OverviewContainer setModalIsOpen={setModalIsOpen} />
       <StockListContainer />
       {/* <TradeFormContainer /> */}
     </div>

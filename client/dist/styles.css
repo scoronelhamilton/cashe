@@ -94,13 +94,16 @@ span {
   margin: 0;
   padding: 0;
   border: 0;
-  box-sizing: border-box;
   vertical-align: baseline;
   font: inherit;
   font-size: 100%;
   font-weight: lighter;
   color: #727070;
   font-family: 'Roboto', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 button,
@@ -150,6 +153,10 @@ body,
   text-align: center;
   padding: 14px;
   text-decoration: none;
+}
+
+#navbar a:hover {
+  cursor: pointer;
 }
 
 .content {
@@ -240,20 +247,23 @@ body,
   margin-right: 4%;
 }
 
-#buy-btn {
-  width: 100%;
-  height: 100%;
-  padding: 10% 30%;
+.buy-btn {
   background-color: rgba(0, 30, 255, 0.8);
   color: white;
   cursor: pointer;
   transition: all 0.3s ease 0s;
   border: none;
-  border-radius: 30px;
 }
 
-#buy-btn:hover {
+.buy-btn:hover {
   background-color: rgba(0, 30, 255, 1);
+}
+
+#overview-container .buy-btn {
+  width: 100%;
+  height: 100%;
+  padding: 10% 30%;
+  border-radius: 30px;
 }
 
 /** Stock List Container */
@@ -279,4 +289,143 @@ tr.stock-list-row {
 
 tr.stock-list-row td {
   border-bottom: 0.04em solid #cecbcb;
+}
+
+/*
+
+  __  __           _       _ 
+ |  \/  | ___   __| | __ _| |
+ | |\/| |/ _ \ / _` |/ _` | |
+ | |  | | (_) | (_| | (_| | |
+ |_|  |_|\___/ \__,_|\__,_|_|
+                             
+
+*/
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  overflow: auto;
+  background-color: white;
+  padding: 1%;
+  transform: translate(-50%, -50%);
+  outline: none;
+  border: 1.5px solid lightgrey;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#trade-modal {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-wrapper {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-container {
+  height: 100%;
+  width: 100%;
+  padding: 2.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f7f7f7;
+}
+
+.close-modal-button {
+  position: absolute;
+  font-weight: 600;
+  right: 3%;
+  top: 1.5%;
+  cursor: pointer;
+  font-size: 40px;
+  color: #666;
+  border-radius: 50%;
+  background-color: #ffffff00;
+}
+
+/*
+
+  _____              _        _____                    
+ |_   _| __ __ _  __| | ___  |  ___|__  _ __ _ __ ___  
+   | || '__/ _` |/ _` |/ _ \ | |_ / _ \| '__| '_ ` _ \ 
+   | || | | (_| | (_| |  __/ |  _| (_) | |  | | | | | |
+   |_||_|  \__,_|\__,_|\___| |_|  \___/|_|  |_| |_| |_|
+                                                       
+
+*/
+
+#trade-form-container {
+  padding: 2% 4% 7% 4%;
+  width: 50%;
+  display: flex;
+
+  flex-direction: column;
+}
+
+#trade-form-container h3 {
+  font-size: 1.5em;
+  font-weight: 300;
+  margin-bottom: 7%;
+}
+
+.trade-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.trade-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.trade-form input {
+  margin-bottom: 3.5%;
+  padding: 3%;
+  font-weight: 400;
+  font-size: 0.9em;
+  color: black;
+  border-style: solid;
+  border-color: #cecbcb;
+  border-width: 0.1em;
+}
+.trade-form input:focus {
+  border-color: rgba(0, 30, 255, 0.8);
+  outline-width: 0.25em;
+}
+
+.trade-form input::placeholder {
+  font-size: 1em;
+}
+
+.trade-form label {
+  color: #1123abcc;
+  font-weight: 400;
+  padding-bottom: 1%;
+}
+
+.trade-form-wrapper .buy-btn {
+  width: 100%;
+  padding: 2%;
+  font-weight: 500;
 }
