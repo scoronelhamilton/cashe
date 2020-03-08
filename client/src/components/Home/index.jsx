@@ -5,26 +5,35 @@ import TradeModal from './TradeModal/index';
 import PortfolioContainer from '../../containers/Portfolio';
 import Transactions from './Transactions/index';
 import { getUserInfo, getAllSymbols, getOpeningPrices } from '../../api/helpers';
+import { set } from 'mongoose';
 
-const Home = ({ setUserInfo, setSymbolsList, portfolio }) => {
+const Home = ({ setUserInfo, setSymbolsList, setOpeningPrices }) => {
   const [showPortfolio, setShowPortfolio] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    getUserInfo()
-      .then(({ data }) => setUserInfo(data))
-      .catch(err => console.error(err));
+    async function fetchData() {
+      setIsLoading(true);
+      try {
+        const [{ data: user }, { data: symbols }] = await Promise.all([
+          getUserInfo(),
+          getAllSymbols(),
+        ]);
 
-    getAllSymbols()
-      .then(({ data }) => setSymbolsList(data))
-      .catch(err => console.error(err));
+        setUserInfo(user);
+        setSymbolsList(symbols);
+
+        const portfolio = Object.keys(user.portfolio);
+        const { data: openingPrices } = await getOpeningPrices(portfolio);
+        setOpeningPrices(openingPrices);
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+
+    fetchData();
   }, []);
-
-  // useEffect(() => {
-  //   getOpeningPrices('AAPL,FB')
-  //     .then(data => console.log(data))
-  //     .catch(e => console.error(e.message));
-  // }, [portfolio]);
 
   return (
     <div id="app-container">

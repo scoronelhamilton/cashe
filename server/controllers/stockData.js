@@ -1,5 +1,6 @@
 const IEX = require('../services/iexAPI');
 const { getOpeningPrice } = require('../services/alphaVantageAPI');
+const { formatOpeningPrices } = require('../services/helpers.js');
 
 exports.getSymbols = (req, res) => {
   IEX.getSymbolsList()
@@ -24,27 +25,19 @@ exports.getLastPrice = (req, res) => {
     });
 };
 
-exports.getOpeningPrices = (req, res) => {
+exports.getOpeningPrices = async (req, res) => {
   const { symbols } = req.query;
-  if (typeof symbols !== 'string') return res.sendStatus(404);
+  if (!Array.isArray(symbols) || symbols.length === 0) {
+    return res.sendStatus(404);
+  }
 
-  const formated = symbols.replace(/ /g, '').split(',');
-  const promises = formated.map(symbol => getOpeningPrice(symbol));
-  Promise.all(promises)
-    .then(resp => {
-      const openingPrices = {
-        latestTradingDay: resp[0].data['Global Quote']['07. latest trading day'],
-        prices: {},
-      };
-      resp.forEach(({ data: { ['Global Quote']: stock } }) => {
-        const symbol = stock['01. symbol'];
-        const openingPrice = stock['02. open'];
-        openingPrices.prices[symbol] = openingPrice;
-      });
-      res.json(openingPrices);
-    })
-    .catch(err => {
-      res.sendStatus(500);
-      console.error(err.message);
-    });
+  const promises = symbols.map(symbol => getOpeningPrice(symbol));
+  try {
+    const response = await Promise.all(promises);
+    const openingPrices = formatOpeningPrices(response);
+    res.json(openingPrices);
+  } catch (err) {
+    res.sendStatus(500);
+    console.error(err);
+  }
 };

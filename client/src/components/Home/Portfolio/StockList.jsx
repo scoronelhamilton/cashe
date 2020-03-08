@@ -1,7 +1,7 @@
 import React from 'react';
 import { convertToCurrency } from '../../../helpers/index';
 
-const StockList = ({ portfolio }) => {
+const StockList = ({ portfolio, openingPrices }) => {
   const getHeaders = () => {
     const headers = ['Symbol', 'Shares', 'Value', 'Change'];
     return (
@@ -19,12 +19,14 @@ const StockList = ({ portfolio }) => {
     if (!portfolio[symbol]) return;
     const { amount, currentPrice } = portfolio[symbol];
     const value = !currentPrice ? '' : currentPrice * amount;
+    const change = !openingPrices[symbol] ? '' : currentPrice - openingPrices[symbol];
 
     return (
       <tr key={symbol} className="stock-list-row">
         <td>{symbol}</td>
         <td>{amount}</td>
         <td>{convertToCurrency(value)}</td>
+        <td>{convertToCurrency(change)}</td>
       </tr>
     );
   };

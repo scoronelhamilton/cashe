@@ -19,3 +19,18 @@ exports.formatUserInfo = user => {
     portfolio: newPortfolio,
   };
 };
+
+exports.formatOpeningPrices = response => {
+  const openingPrices = {
+    latestTradingDay: response[0].data['Global Quote']['07. latest trading day'],
+    prices: {},
+  };
+
+  response.forEach(({ data: { ['Global Quote']: stock } }) => {
+    const symbol = stock['01. symbol'];
+    const openingPrice = stock['02. open'];
+    openingPrices.prices[symbol] = openingPrice;
+  });
+
+  return openingPrices;
+};
