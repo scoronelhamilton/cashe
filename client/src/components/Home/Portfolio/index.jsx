@@ -1,42 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import StockListContainer from '../../../containers/StockList';
-// import TradeFormContainer from '../../../containers/TradeForm';
 import OverviewContainer from './../../../containers/Portfolio/Overview';
 import { getCurrentPrices } from '../../../api/helpers';
 
 const Portfolio = ({ portfolio, setCurrentPrices, setModalIsOpen }) => {
-  const intervalIds = [];
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    const symbols = Object.keys(portfolio).join(',');
-    cleanup(intervalIds);
-    fetchData(symbols);
-
-    intervalIds.push(setInterval(() => fetchData(symbols), 10000));
-    return () => cleanup(intervalIds);
-  }, [portfolio]);
-
-  const cleanup = ids => {
-    ids.forEach(id => {
-      clearInterval(id);
-    });
-  };
-
-  const fetchData = symbols => {
-    getCurrentPrices(symbols)
-      .then(({ data }) => setCurrentPrices(data))
-      .catch(err => {
-        cleanup(intervalIds);
-        console.error(err.message);
-      });
-  };
+    const symbols = Object.keys(portfolio);
+    if (symbols.length > 0) {
+      getCurrentPrices(symbols)
+        .then(({ data }) => setCurrentPrices(data))
+        .catch(err => console.error(err.message));
+    }
+  }, [refresh]);
 
   return (
     <div id="portfolio-container">
-      <OverviewContainer setModalIsOpen={setModalIsOpen} />
+      <OverviewContainer
+        setModalIsOpen={setModalIsOpen}
+        refresh={refresh}
+        setRefresh={setRefresh}
+      />
       <StockListContainer />
-      {/* <TradeFormContainer /> */}
     </div>
   );
 };

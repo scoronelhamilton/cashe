@@ -1,7 +1,17 @@
 import React from 'react';
+import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { convertToCurrency } from '../../../helpers/index';
 
-const Overview = ({ user, portfolio, portfolioValue, setModalIsOpen }) => {
+const Overview = ({
+  user,
+  portfolio,
+  portfolioValue,
+  setModalIsOpen,
+  refresh,
+  setRefresh,
+  lastUpdate,
+}) => {
   const getTotalStocks = () =>
     !user ? '' : `Total stocks: ${Object.keys(portfolio).length}`;
 
@@ -11,13 +21,25 @@ const Overview = ({ user, portfolio, portfolioValue, setModalIsOpen }) => {
   const getPortfolioValue = () =>
     !portfolioValue ? '$' : `${convertToCurrency(portfolioValue)}`;
 
+  const getUpdateSection = () =>
+    !lastUpdate ? (
+      ''
+    ) : (
+      <span id="updated-date">
+        {`As of ${moment.utc(lastUpdate).format('LLL')}`}
+        <button id="refresh-button" type="button" onClick={() => setRefresh(!refresh)}>
+          <FontAwesomeIcon icon="sync-alt" />
+        </button>
+      </span>
+    );
+
   return (
     <div id="overview-container">
       <div className="upper-section-ovw">
         <div className="portfolio-info-section">
           <p>Portfolio Value</p>
           <p id="portfolio-value">{getPortfolioValue()}</p>
-          <span id="updated-date">As of 12/03/2020</span>
+          {getUpdateSection()}
         </div>
       </div>
       <div className="lower-section-ovw">
@@ -25,11 +47,9 @@ const Overview = ({ user, portfolio, portfolioValue, setModalIsOpen }) => {
           <p>{getTotalStocks()}</p>
           <p>{getAvailableCash()}</p>
         </div>
-        <div className="trade-buttons">
-          <button className="buy-btn" type="button" onClick={() => setModalIsOpen(true)}>
-            Buy
-          </button>
-        </div>
+        <button className="buy-btn" type="button" onClick={() => setModalIsOpen(true)}>
+          Buy Stocks!
+        </button>
       </div>
     </div>
   );

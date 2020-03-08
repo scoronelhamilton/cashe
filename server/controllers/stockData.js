@@ -13,15 +13,16 @@ exports.getSymbols = (req, res) => {
 
 exports.getLastPrice = (req, res) => {
   const { symbols } = req.query;
-  if (typeof symbols !== 'string' || symbols.length === 0) {
+  if (!Array.isArray(symbols) || symbols.length === 0) {
     return res.sendStatus(404);
   }
 
-  IEX.getLastPrice(symbols)
+  const joined = symbols.join(',');
+  IEX.getLastPrice(joined)
     .then(({ data }) => res.json(data))
     .catch(err => {
       res.sendStatus(500);
-      console.error(err.message);
+      console.error(err);
     });
 };
 

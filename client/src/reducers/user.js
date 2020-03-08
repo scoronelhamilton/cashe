@@ -3,6 +3,7 @@ const initialState = {
   userInfo: {},
   portfolio: {},
   portfolioValue: null,
+  lastUpdate: null,
 };
 
 export default (state = initialState, action) => {
@@ -26,7 +27,14 @@ export default (state = initialState, action) => {
         newPortfolioValue += price * portfolio[symbol].amount;
       }
 
-      return { ...state, portfolio: newPortfolio, portfolioValue: newPortfolioValue };
+      const currentTime = new Date(Date()).toISOString();
+
+      return {
+        ...state,
+        portfolio: newPortfolio,
+        portfolioValue: newPortfolioValue,
+        lastUpdate: currentTime,
+      };
     }
     case 'ADD_STOCK': {
       const { symbol, amount, netValue } = action.payload;
