@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { saveToken, setHeaders } from '../../auth/index';
-import LogIn from './LogIn.jsx';
+import LogIn from './Login.jsx';
 import SignUp from './SignUp.jsx';
 
 const LoginPage = ({ setRedirect }) => {
