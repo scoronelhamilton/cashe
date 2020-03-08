@@ -32,6 +32,7 @@ app.get('*', (req, res) => {
 // Initialization
 db.connect()
   .then(() => {
+    console.log('conneted');
     httpServer.listen(PORT, e => {
       if (e) throw new Error(e.message);
 
