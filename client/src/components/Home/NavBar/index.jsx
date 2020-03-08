@@ -8,6 +8,7 @@ const NavBar = ({ setShowPortfolio }) => {
         <div>
           <a onClick={() => setShowPortfolio(true)}>Portfolio</a>
           <a onClick={() => setShowPortfolio(false)}>Transactions</a>
+          <a>Log Out</a>
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@ const Overview = ({
       ''
     ) : (
       <span id="updated-date">
-        {`As of ${moment.utc(lastUpdate).format('LLL')}`}
+        {`As of ${moment(lastUpdate).format('LLL')}`}
         <button id="refresh-button" type="button" onClick={() => setRefresh(!refresh)}>
           <FontAwesomeIcon icon="sync-alt" />
         </button>
