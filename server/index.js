@@ -7,10 +7,10 @@ const path = require('path');
 const env = require('dotenv').config();
 
 const router = require('./routes/routes');
-// const db = require('./db/index');
+const db = require('./db/index');
 
 const app = express();
-const httpServer = http.createServer(app);
+// const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 8080;
 
 const APP_DIRECTORY = path.join(__dirname, '../client/dist');
@@ -29,27 +29,35 @@ app.get('*', (req, res) => {
   res.sendFile(ROOT_FILE);
 });
 
-// Initialization
-// db.connect()
-//   .then(() => {
-httpServer.listen(PORT, e => {
-  if (e) throw new Error(e.message);
+app.listen(PORT, err => {
+  if (err) console.error(err.message);
 
   if (process.env.NODE_ENV !== 'test') {
     console.log(`Server listening on port ${PORT}...`);
   }
 });
+
+// Initialization
+// db.connect()
+//   .then(() => {
+// httpServer.listen(PORT, e => {
+//   if (e) throw new Error(e.message);
+
+//   if (process.env.NODE_ENV !== 'test') {
+//     console.log(`Server listening on port ${PORT}...`);
+//   }
+// });
 // })
 // .catch(e => console.error(e));
 
 // Shutdown
-const shutdownGracefully = () => {
-  console.log('Initializing shutdown...');
-  // db.disconnect()
-  //   .catch(e => console.error(e))
-  //   .finally(() => httpServer.close(() => console.log('Server shut down')));
-  httpServer.close();
-};
+// const shutdownGracefully = () => {
+//   console.log('Initializing shutdown...');
+//   // db.disconnect()
+//   //   .catch(e => console.error(e))
+//   //   .finally(() => httpServer.close(() => console.log('Server shut down')));
+//   httpServer.close();
+// };
 
-process.on('SIGINT', shutdownGracefully);
-process.on('SIGTERM', shutdownGracefully);
+// process.on('SIGINT', shutdownGracefully);
+// process.on('SIGTERM', shutdownGracefully);
