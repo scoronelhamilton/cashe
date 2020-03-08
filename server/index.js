@@ -13,8 +13,8 @@ const app = express();
 const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 8080;
 
-const APP_DIRECTORY = path.resolve(__dirname, '../client/dist');
-const ROOT_FILE = path.resolve(__dirname, '../client/dist/index.html');
+const APP_DIRECTORY = path.join(__dirname, '../client/dist');
+const ROOT_FILE = path.join(__dirname, '../client/dist/index.html');
 
 // Middleware
 if (process.env.NODE_ENV === 'dev') app.use(morgan('dev'));
