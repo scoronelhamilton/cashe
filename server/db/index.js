@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const host = 'mongodb://localhost/cashe' || process.env.MONGODB_URI;
+const host = process.env.MONGODB_URI || 'mongodb://localhost/cashe';
 
 exports.connect = () =>
   mongoose
