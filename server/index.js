@@ -7,7 +7,7 @@ const path = require('path');
 const env = require('dotenv').config();
 
 const router = require('./routes/routes');
-const db = require('./db/index');
+// const db = require('./db/index');
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -30,24 +30,25 @@ app.get('*', (req, res) => {
 });
 
 // Initialization
-db.connect()
-  .then(() => {
-    httpServer.listen(PORT, e => {
-      if (e) throw new Error(e.message);
+// db.connect()
+//   .then(() => {
+httpServer.listen(PORT, e => {
+  if (e) throw new Error(e.message);
 
-      if (process.env.NODE_ENV !== 'test') {
-        console.log(`Server listening on port ${PORT}...`);
-      }
-    });
-  })
-  .catch(e => console.error(e));
+  if (process.env.NODE_ENV !== 'test') {
+    console.log(`Server listening on port ${PORT}...`);
+  }
+});
+// })
+// .catch(e => console.error(e));
 
 // Shutdown
 const shutdownGracefully = () => {
   console.log('Initializing shutdown...');
-  db.disconnect()
-    .catch(e => console.error(e))
-    .finally(() => httpServer.close(() => console.log('Server shut down')));
+  // db.disconnect()
+  //   .catch(e => console.error(e))
+  //   .finally(() => httpServer.close(() => console.log('Server shut down')));
+  httpServer.close();
 };
 
 process.on('SIGINT', shutdownGracefully);
