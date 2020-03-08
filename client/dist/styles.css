@@ -300,6 +300,14 @@ tr.stock-list-row td {
   border-bottom: 0.04em solid #cecbcb;
 }
 
+tr:hover {
+  background-color: #f6f6f6c5;
+}
+
+.performance-arrow {
+  margin-left: 2%;
+}
+
 /*
 
   __  __           _       _ 

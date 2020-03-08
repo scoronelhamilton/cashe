@@ -22,14 +22,18 @@ exports.formatUserInfo = user => {
 
 exports.formatOpeningPrices = response => {
   const openingPrices = {
-    latestTradingDay: response[0].data['Global Quote']['07. latest trading day'],
+    latestTradingDay: null,
     prices: {},
   };
 
   response.forEach(({ data: { ['Global Quote']: stock } }) => {
-    const symbol = stock['01. symbol'];
-    const openingPrice = stock['02. open'];
-    openingPrices.prices[symbol] = openingPrice;
+    const symbol = stock ? stock['01. symbol'] : '';
+    const openingPrice = stock ? stock['02. open'] : 0;
+    openingPrices.prices[symbol] = parseInt(openingPrice);
+
+    if (!openingPrices.latestTradingDay && stock && stock['07. latest trading day']) {
+      openingPrices.latestTradingDay = stock['07. latest trading day'];
+    }
   });
 
   return openingPrices;

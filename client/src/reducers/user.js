@@ -40,15 +40,16 @@ export default (state = initialState, action) => {
       const { symbol, amount, netValue } = action.payload;
       const { userInfo, portfolio } = state;
       const { cash } = userInfo;
+      const stock = portfolio[symbol];
 
-      let currentStockAmount = portfolio[symbol];
-      if (!currentStockAmount) {
-        currentStockAmount = amount;
+      let newStock;
+      if (!stock) {
+        newStock = { symbol, amount };
       } else {
-        currentStockAmount += amount;
+        newStock = { ...stock, amount: stock[amount] + amount };
       }
 
-      const newPortfolio = { ...portfolio, [symbol]: currentStockAmount };
+      const newPortfolio = { ...portfolio, [symbol]: newStock };
       const newCash = cash - netValue;
       const newUserInfo = { ...userInfo, cash: newCash };
 

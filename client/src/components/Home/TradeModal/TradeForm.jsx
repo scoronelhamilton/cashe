@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useInput } from '../../../hooks/input-hooks';
 import { isSymbolPresent, convertToCurrency } from '../../../helpers/index';
-import { buyStock } from '../../../api/helpers';
+import { buyStock, getCurrentPrices, getOpeningPrices } from '../../../api/helpers';
 
 const TradeForm = ({ cash, symbols, addStock }) => {
   const { value: symbol, bind: bindSymbol, reset: resetSymbol } = useInput('');
@@ -23,6 +23,7 @@ const TradeForm = ({ cash, symbols, addStock }) => {
 
   const validateSymbol = () => {
     const formated = symbol.replace(/ /g, '').toUpperCase();
+    console.log('running');
     if (isSymbolPresent(symbols, formated)) {
       setSymbolIsValid(true);
     } else {
@@ -31,6 +32,7 @@ const TradeForm = ({ cash, symbols, addStock }) => {
   };
 
   const validateAmount = () => {
+    console.log('value vaidated');
     if (Number(amount) % 1 === 0) {
       setAmountIsValid(true);
     } else {
@@ -54,13 +56,13 @@ const TradeForm = ({ cash, symbols, addStock }) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (!transactionIsValid) return;
-
     const formatedSymbol = symbol.replace(/ /g, '').toUpperCase();
     const formatedAmount = Number(amount);
     buyStock(formatedSymbol, formatedAmount)
       .then(({ data }) => {
-        addStock(data);
+        console.log(data);
         resetForm();
+        handleSuccessfulTransaction(data);
       })
       .catch(err => {
         resetAmount();
@@ -70,11 +72,15 @@ const TradeForm = ({ cash, symbols, addStock }) => {
       });
   };
 
+  const handleSuccessfulTransaction = stock => {
+    addStock(stock);
+  };
+
   return (
     <div id="trade-form-container">
       <h3>{cash ? `Wallet: ${convertToCurrency(cash)}` : ''}</h3>
       <div className="trade-form-wrapper">
-        <form className="trade-form" onSubmit={handleSubmit}>
+        <form id="buy-form" className="trade-form" onSubmit={handleSubmit}>
           <label>Symbol</label>
           <input
             type="text"
@@ -94,8 +100,9 @@ const TradeForm = ({ cash, symbols, addStock }) => {
         </form>
         <button
           className="buy-btn"
+          onClick={() => console.log('clicked')}
           type="submit"
-          form="trade-form"
+          form="buy-form"
           disabled={!transactionIsValid}
         >
           Buy

@@ -19,7 +19,7 @@ const Overview = ({
     !user ? '' : `Available cash: ${convertToCurrency(user.cash)}`;
 
   const getPortfolioValue = () =>
-    !portfolioValue ? '$' : `${convertToCurrency(portfolioValue)}`;
+    !portfolioValue ? '$0' : `${convertToCurrency(portfolioValue)}`;
 
   const getUpdateSection = () =>
     !lastUpdate ? (

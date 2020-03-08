@@ -25,6 +25,8 @@ const Home = ({ setUserInfo, setSymbolsList, setOpeningPrices, setCurrentPrices 
         setSymbolsList(symbols);
 
         const portfolio = Object.keys(user.portfolio);
+        if (portfolio.length === 0) return;
+
         const { data: currentPrices } = await getCurrentPrices(portfolio);
         setCurrentPrices(currentPrices);
 
