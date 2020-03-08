@@ -21,7 +21,6 @@ if (process.env.NODE_ENV === 'dev') app.use(morgan('dev'));
 if (process.env.NODE_ENV === 'prod') app.use(morgan('tiny'));
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use('/', router);
 
 // Serve static files
 app.use(express.static(APP_DIRECTORY));
@@ -29,10 +28,11 @@ app.get('*', (req, res) => {
   res.sendFile(ROOT_FILE);
 });
 
+app.use('/', router);
+
 // Initialization
 db.connect()
   .then(() => {
-    console.log('conneted');
     httpServer.listen(PORT, e => {
       if (e) throw new Error(e.message);
 
