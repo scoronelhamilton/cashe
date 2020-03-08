@@ -1,10 +1,14 @@
 const User = require('../models/user');
 const Transaction = require('../models/transaction');
 const { getLastPrice } = require('../services/iexAPI');
+const { formatUserInfo } = require('../services/helpers.js');
 
 exports.getInfo = (req, res) => {
   User.getInfo(req.userId)
-    .then(info => res.json(info))
+    .then(user => {
+      const formated = formatUserInfo(user);
+      res.send(formated);
+    })
     .catch(e => {
       res.sendStatus(404);
       console.error(e);

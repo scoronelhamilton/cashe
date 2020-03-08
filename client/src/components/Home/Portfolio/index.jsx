@@ -10,6 +10,7 @@ const Portfolio = ({ portfolio, setCurrentPrices, setModalIsOpen }) => {
 
   useEffect(() => {
     const symbols = Object.keys(portfolio).join(',');
+    console.log(symbols);
     cleanup(intervalIds);
     fetchData(symbols);
 
@@ -25,9 +26,12 @@ const Portfolio = ({ portfolio, setCurrentPrices, setModalIsOpen }) => {
 
   const fetchData = symbols => {
     getCurrentPrices(symbols)
-      .then(({ data }) => setCurrentPrices(data))
+      .then(({ data }) => {
+        console.log(data);
+        setCurrentPrices(data);
+      })
       .catch(err => {
-        cleanup(ids);
+        cleanup(intervalIds);
         console.error(err.message);
       });
   };

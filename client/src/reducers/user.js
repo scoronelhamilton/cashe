@@ -1,8 +1,7 @@
 const initialState = {
   isLoggedIn: false,
-  userInfo: {
-    portfolio: {},
-  },
+  userInfo: {},
+  portfolio: {},
 };
 
 export default (state = initialState, action) => {
@@ -11,11 +10,26 @@ export default (state = initialState, action) => {
       return { ...state, isLoggedIn: action.payload };
     }
     case 'SET_USER_INFO': {
-      return { ...state, userInfo: action.payload };
+      const { userInfo, portfolio } = action.payload;
+      return { ...state, userInfo, portfolio };
+    }
+    case 'SET_CURRENT_PRICES': {
+      const stocks = action.payload;
+      console.log('setting', stocks);
+      const { portfolio } = state;
+
+      const newPortfolio = {};
+      for (let stock of stocks) {
+        const { symbol, price } = stock;
+        newPortfolio[symbol] = { ...portfolio[symbol], currentPrice: price };
+      }
+
+      return { ...state, portfolio: newPortfolio };
     }
     case 'ADD_STOCK': {
       const { symbol, amount, netValue } = action.payload;
-      const { cash, portfolio } = state.userInfo;
+      const { userInfo, portfolio } = state;
+      const { cash } = userInfo;
 
       let currentStockAmount = portfolio[symbol];
       if (!currentStockAmount) {
@@ -26,9 +40,9 @@ export default (state = initialState, action) => {
 
       const newPortfolio = { ...portfolio, [symbol]: currentStockAmount };
       const newCash = cash - netValue;
-      const newUserInfo = { ...state.userInfo, cash: newCash, portfolio: newPortfolio };
+      const newUserInfo = { ...userInfo, cash: newCash };
 
-      return { ...state, userInfo: newUserInfo };
+      return { ...state, userInfo: newUserInfo, portfolio: newPortfolio };
     }
     default:
       return state;

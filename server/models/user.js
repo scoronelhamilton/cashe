@@ -5,13 +5,7 @@ exports.findUser = email => User.findOne({ email: email }, 'email password');
 exports.register = data => User.create(data);
 
 exports.getInfo = id =>
-  User.findOne({ _id: id }, 'name cash portfolio')
-    .then(info => {
-      return info;
-    })
-    .catch(err => {
-      throw new Error(err.message);
-    });
+  User.findOne({ _id: id }, 'name cash portfolio').then(user => user);
 
 exports.addStock = async data => {
   const { userId, symbol, amount, netValue } = data;

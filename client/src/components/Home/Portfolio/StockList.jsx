@@ -1,21 +1,24 @@
 import React from 'react';
 import { convertToCurrency } from '../../../helpers/index';
 
-const StockList = ({ portfolio, currentPrices }) => {
+const StockList = ({ portfolio }) => {
   const getHeaders = () => {
     const headers = ['Symbol', 'Shares', 'Value', 'Change'];
     return (
       <tr className="stock-list-headers stock-list-row">
-        {headers.map(header => (
-          <th className="stock-list-table-header">{header}</th>
+        {headers.map((header, i) => (
+          <th key={`${header}_${i}`} className="stock-list-table-header">
+            {header}
+          </th>
         ))}
       </tr>
     );
   };
 
-  const getStock = (symbol, i) => {
-    const amount = portfolio[symbol];
-    const value = currentPrices[i] ? currentPrices[i].price * amount : 0;
+  const getStock = symbol => {
+    if (!portfolio[symbol]) return;
+    const { amount, currentPrice } = portfolio[symbol];
+    const value = !currentPrice ? '' : currentPrice * amount;
 
     return (
       <tr key={symbol} className="stock-list-row">
@@ -26,11 +29,17 @@ const StockList = ({ portfolio, currentPrices }) => {
     );
   };
 
+  const renderAllStocks = () => {
+    const symbols = Object.keys(portfolio);
+    if (symbols.length === 0) return;
+    return symbols.map(symbol => getStock(symbol));
+  };
+
   return (
     <div id="stock-list-container">
       <table id="stock-list-table">
         <thead>{getHeaders()}</thead>
-        <tbody>{Object.keys(portfolio).map((symbol, i) => getStock(symbol, i))}</tbody>
+        <tbody>{renderAllStocks()}</tbody>
       </table>
     </div>
   );

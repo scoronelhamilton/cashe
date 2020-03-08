@@ -4,7 +4,7 @@ import setUserInfo from '../../actions/creators/setUserInfo';
 import setSymbolsList from '../../actions/creators/setSymbolsList';
 
 const mapStateToProps = store => ({
-  portfolio: store.user.userInfo.portfolio,
+  portfolio: store.user.portfolio,
 });
 
 const mapDispatchToProps = dispatch => ({

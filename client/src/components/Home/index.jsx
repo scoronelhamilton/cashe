@@ -20,11 +20,11 @@ const Home = ({ setUserInfo, setSymbolsList, portfolio }) => {
       .catch(err => console.error(err));
   }, []);
 
-  useEffect(() => {
-    getOpeningPrices('AAPL,FB')
-      .then(data => console.log(data))
-      .catch(e => console.error(e.message));
-  }, [portfolio]);
+  // useEffect(() => {
+  //   getOpeningPrices('AAPL,FB')
+  //     .then(data => console.log(data))
+  //     .catch(e => console.error(e.message));
+  // }, [portfolio]);
 
   return (
     <div id="app-container">

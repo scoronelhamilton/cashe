@@ -1,34 +1,21 @@
-/*
- * This function sorts the portfolio in ascending order
- * Input: array of objects
- * Output: sorted array of objects
- */
+exports.formatUserInfo = user => {
+  /*
+  Input: mongoose document {..., portfolio {AAPL: 2}}
+  Output: object of objects {..., portfolio: {AAPL: {symbol: AAPL, amount: 2}}}
+  */
 
-exports.sortPortfolio = (portfolio, direction) => {
-  const compare = (a, b) => {
-    if (!a[criteria] || !b[criteria]) {
-      return 0;
-    }
+  const userJSON = user.toJSON();
+  const { portfolio } = userJSON;
+  const sortedKeys = Object.keys(portfolio).sort();
+  const newPortfolio = {};
 
-    const elementA =
-      typeof a[criteria] === 'string' ? a[criteria].toLowerCase() : a[criteria];
+  for (let key of sortedKeys) {
+    newPortfolio[key] = { symbol: key, amount: portfolio[key] };
+  }
 
-    const elementB =
-      typeof b[criteria] === 'string' ? b[criteria].toLowerCase() : b[criteria];
-
-    let comparison = 0;
-    if (elementA > elementB) {
-      comparison = 1;
-    } else if (elementA < elementB) {
-      comparison = -1;
-    }
-
-    if (direction === 'desc') {
-      return comparison * -1;
-    } else {
-      return comparison;
-    }
+  delete userJSON.portfolio;
+  return {
+    userInfo: { ...userJSON },
+    portfolio: newPortfolio,
   };
-
-  return data.sort(compare);
 };

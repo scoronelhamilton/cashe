@@ -3,7 +3,7 @@ import Portfolio from '../../components/Home/Portfolio/index';
 import setCurrentPrices from '../../actions/creators/setCurrentPrices';
 
 const mapStateToProps = store => ({
-  portfolio: store.user.userInfo.portfolio,
+  portfolio: store.user.portfolio,
 });
 
 const mapDispatchToProps = dispatch => ({

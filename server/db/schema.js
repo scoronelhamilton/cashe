@@ -9,6 +9,7 @@ const userSchema = new Schema({
   portfolio: {
     type: Map,
     of: Number,
+    get: v => `${global}${v}`,
     default: {},
   },
 });

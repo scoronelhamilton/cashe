@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import StockList from '../../components/Home/Portfolio/StockList';
 
 const mapStateToProps = store => ({
-  portfolio: store.user.userInfo.portfolio,
+  portfolio: store.user.portfolio,
   currentPrices: store.stocks.currentPrices,
 });
 

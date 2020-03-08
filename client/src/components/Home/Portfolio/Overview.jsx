@@ -1,9 +1,9 @@
 import React from 'react';
 import { convertToCurrency } from '../../../helpers/index';
 
-const Overview = ({ user, setModalIsOpen }) => {
+const Overview = ({ user, portfolio, setModalIsOpen }) => {
   const getTotalStocks = () =>
-    !user ? '' : `Total stocks: ${Object.keys(user.portfolio).length}`;
+    !user ? '' : `Total stocks: ${Object.keys(portfolio).length}`;
 
   const getAvailableCash = () =>
     !user ? '' : `Available cash: ${convertToCurrency(user.cash)}`;
