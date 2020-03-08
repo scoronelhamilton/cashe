@@ -1,6 +1,9 @@
 const initialState = {
   symbols: [],
-  currentPrices: {},
+  currentPrices: {
+    symbol: '',
+    price: 0,
+  },
 };
 
 export default (state = initialState, action) => {

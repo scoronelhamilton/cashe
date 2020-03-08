@@ -114,7 +114,169 @@ ul {
 
 html,
 body,
-#app {
+#app,
+#app-container {
   height: 100vh;
   width: 100vw;
+}
+
+#app-container {
+  background: rgb(240, 240, 240);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/*
+
+  _   _             _                
+ | \ | | __ ___   _| |__   __ _ _ __ 
+ |  \| |/ _` \ \ / / '_ \ / _` | '__|
+ | |\  | (_| |\ V /| |_) | (_| | |   
+ |_| \_|\__,_| \_/ |_.__/ \__,_|_|   
+                                     
+
+*/
+
+#navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+#navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+.content {
+  padding: 16px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 60px;
+}
+
+/* MAIN CONTAINER */
+
+#main-container {
+  padding-top: 1.5%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+}
+
+/*
+
+  ____            _    __       _ _       
+ |  _ \ ___  _ __| |_ / _| ___ | (_) ___  
+ | |_) / _ \| '__| __| |_ / _ \| | |/ _ \ 
+ |  __/ (_) | |  | |_|  _| (_) | | | (_) |
+ |_|   \___/|_|   \__|_|  \___/|_|_|\___/ 
+                                          
+
+*/
+
+#portfolio-container {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  flex-grow: 1;
+  margin-bottom: 4%;
+}
+
+#overview-container,
+#stock-list-container,
+#trade-form-container {
+  background: white;
+  border-radius: 0.5em;
+  border-style: solid;
+  border-width: 0.04em;
+  border-color: #cecbcb;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.22);
+  padding: 2%;
+}
+
+/** Overview Container */
+
+#overview-container {
+  margin-bottom: 2%;
+}
+
+.upper-section-ovw,
+.lower-section-ovw {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.upper-section-ovw {
+  margin-bottom: 5%;
+}
+
+#portfolio-value {
+  font-size: 2em;
+  font-weight: 300;
+  margin-bottom: 1.2%;
+}
+
+#updated-date {
+  font-size: 0.8em;
+}
+
+.trade-buttons {
+  width: 15%;
+  margin-right: 4%;
+}
+
+#buy-btn {
+  width: 100%;
+  height: 100%;
+  padding: 10% 30%;
+  background-color: rgba(0, 30, 255, 0.8);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  border: none;
+  border-radius: 30px;
+}
+
+#buy-btn:hover {
+  background-color: rgba(0, 30, 255, 1);
+}
+
+/** Stock List Container */
+
+#stock-list-container {
+  display: flex;
+  flex-grow: 1;
+  overflow: scroll;
+}
+
+#stock-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.stock-list-table-header {
+  text-align: left;
+  font-weight: 500;
+}
+
+tr.stock-list-row {
+  line-height: 35px;
+}
+
+tr.stock-list-row td {
+  border-bottom: 0.04em solid #cecbcb;
 }

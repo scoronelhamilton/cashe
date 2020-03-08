@@ -2,8 +2,7 @@ import React from 'react';
 
 const NavBar = ({ setShowPortfolio }) => {
   return (
-    <div>
-      THIS IS NAV BAR
+    <div id="navbar">
       <a onClick={() => setShowPortfolio(true)}>Portfolio</a>
       <a onClick={() => setShowPortfolio(false)}>Transactions</a>
     </div>

@@ -12,7 +12,7 @@ exports.getSymbols = (req, res) => {
 
 exports.getLastPrice = (req, res) => {
   const { symbols } = req.query;
-  if (typeof symbols !== 'string') {
+  if (typeof symbols !== 'string' || symbols.length === 0) {
     return res.sendStatus(404);
   }
 

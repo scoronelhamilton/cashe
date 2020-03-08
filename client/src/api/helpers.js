@@ -12,8 +12,10 @@ export const getAllSymbols = () => {
   return Axios.get('/symbols');
 };
 
-export const getOpeningPrices = () => {
-  return Axios.get('/opening-prices');
+export const getOpeningPrices = symbols => {
+  return Axios.get('/opening-prices', {
+    params: { symbols },
+  });
 };
 
 export const getCurrentPrices = symbols => {

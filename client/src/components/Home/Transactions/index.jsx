@@ -12,10 +12,10 @@ const Transactions = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <h2>Transactions</h2>
       <TransactionList transactions={transactions} />
-    </>
+    </div>
   );
 };
 

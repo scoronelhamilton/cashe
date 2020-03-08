@@ -71,7 +71,7 @@ const TradeForm = ({ cash, symbols, addStock }) => {
   };
 
   return (
-    <div>
+    <div id="trade-form-container">
       <h3>{cash ? `Cash: ${convertToCurrency(cash)}` : ''}</h3>
       <form id="trade-form" onSubmit={handleSubmit}>
         <label>

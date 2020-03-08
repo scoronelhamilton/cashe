@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import NavBar from './NavBar/index';
 import PortfolioContainer from '../../containers/Portfolio';
 import Transactions from './Transactions/index';
-import { getUserInfo, getAllSymbols } from '../../api/helpers';
+import { getUserInfo, getAllSymbols, getOpeningPrices } from '../../api/helpers';
 
-const Home = ({ setUserInfo, setSymbolsList }) => {
+const Home = ({ setUserInfo, setSymbolsList, portfolio }) => {
   const [showPortfolio, setShowPortfolio] = useState(true);
 
   useEffect(() => {
@@ -18,12 +18,19 @@ const Home = ({ setUserInfo, setSymbolsList }) => {
       .catch(err => console.error(err));
   }, []);
 
+  useEffect(() => {
+    getOpeningPrices('AAPL,FB')
+      .then(data => console.log(data))
+      .catch(e => console.error(e.message));
+  }, [portfolio]);
+
   return (
-    <>
+    <div id="app-container">
       <NavBar setShowPortfolio={setShowPortfolio} />
-      {showPortfolio ? <PortfolioContainer /> : <Transactions />}
-      {/* <a href="https://iexcloud.io">Data provided by IEX Cloud</a> */}
-    </>
+      <div id="main-container">
+        {showPortfolio ? <PortfolioContainer /> : <Transactions />}
+      </div>
+    </div>
   );
 };
 

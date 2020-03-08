@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import StockListContainer from '../../../containers/StockList';
 import TradeFormContainer from '../../../containers/TradeForm';
+import Overview from './Overview';
 import { getCurrentPrices } from '../../../api/helpers';
 
 const Portfolio = ({ portfolio, setCurrentPrices }) => {
@@ -9,9 +10,9 @@ const Portfolio = ({ portfolio, setCurrentPrices }) => {
 
   useEffect(() => {
     const symbols = Object.keys(portfolio).join(',');
-    if (symbols.length) fetchData(symbols);
-
     cleanup(intervalIds);
+    fetchData(symbols);
+
     intervalIds.push(setInterval(() => fetchData(symbols), 8000));
     return () => cleanup(intervalIds);
   }, [portfolio]);
@@ -25,22 +26,18 @@ const Portfolio = ({ portfolio, setCurrentPrices }) => {
   const fetchData = symbols => {
     getCurrentPrices(symbols)
       .then(({ data }) => setCurrentPrices(data))
-      .catch(err => handleError(err));
-  };
-
-  const history = useHistory();
-  const handleError = err => {
-    if ([401, 403].indexOf(err.status).indexOf !== -1) {
-      history.push('/login');
-    }
+      .catch(err => {
+        cleanup(ids);
+        console.error(err.message);
+      });
   };
 
   return (
-    <>
-      <h2>Portfolio</h2>
+    <div id="portfolio-container">
+      <Overview />
       <StockListContainer />
-      <TradeFormContainer />
-    </>
+      {/* <TradeFormContainer /> */}
+    </div>
   );
 };
 
