@@ -36,9 +36,7 @@ app.listen(PORT, err => {
     console.log(`Server listening on port ${PORT}...`);
   }
 });
-[
 
-  
 // db.connect()
 //   .then(() => {
 // httpServer.listen(PORT, e => {
