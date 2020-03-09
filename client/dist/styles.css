@@ -323,6 +323,15 @@ input:-webkit-autofill {
   margin: 5% 0 9% 0;
 }
 
+/* ERROR MESSAGES */
+
+.error-message {
+  color: rgb(194, 11, 11);
+}
+
+#login-page-wrapper .error-message {
+  margin-top: 3%;
+}
 /*
 
   ____            _    __       _ _       

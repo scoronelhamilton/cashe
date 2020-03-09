@@ -20,7 +20,6 @@ const StockList = ({ portfolio, openingPrices }) => {
     if (!portfolio[symbol]) return;
     const { amount, currentPrice } = portfolio[symbol];
     const value = !currentPrice ? '' : currentPrice * amount;
-    // const change = getPriceChange(symbol, currentPrice);
 
     return (
       <tr key={symbol} className="stock-list-row">

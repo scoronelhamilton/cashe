@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ErrorMessage from '../Errors/index';
 import { useInput } from '../../hooks/input-hooks';
 import { logIn } from '../../auth/index';
 
 const LogIn = ({ setShowLogin, handleSuccessAuth }) => {
   const { value: email, bind: bindEmail, reset: resetEmail } = useInput('');
   const { value: password, bind: bindPassword, reset: resetPassword } = useInput('');
+
+  const [hasError, setHasError] = useState(false);
+  const [error, setError] = useState('');
+
+  const renderErrorMessage = () => <ErrorMessage hasError={hasError} message={error} />;
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -13,7 +19,11 @@ const LogIn = ({ setShowLogin, handleSuccessAuth }) => {
       .then(({ data }) => {
         handleSuccessAuth(data.token);
       })
-      .catch(e => resetPassword());
+      .catch(e => {
+        setHasError(true);
+        setError('Incorrect user or password.');
+        resetPassword();
+      });
   };
 
   return (
@@ -34,6 +44,7 @@ const LogIn = ({ setShowLogin, handleSuccessAuth }) => {
           Sign up
         </button>
       </div>
+      {renderErrorMessage()}
     </div>
   );
 };

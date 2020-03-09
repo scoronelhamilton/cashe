@@ -1,17 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import ErrorMessage from '../../Errors/index';
 import { useInput } from '../../../hooks/input-hooks';
 import { isSymbolPresent, convertToCurrency } from '../../../helpers/index';
 import { buyStock, getCurrentPrices, getOpeningPrices } from '../../../api/helpers';
 
-const TradeForm = ({ cash, symbols, addStock }) => {
+const TradeForm = ({
+  cash,
+  portfolio,
+  symbols,
+  addStock,
+  setOpeningPrices,
+  setCurrentPrices,
+}) => {
   const { value: symbol, bind: bindSymbol, reset: resetSymbol } = useInput('');
   const { value: amount, bind: bindAmount, reset: resetAmount } = useInput('');
 
   const [symbolIsValid, setSymbolIsValid] = useState(false);
   const [amountIsValid, setAmountIsValid] = useState(false);
   const [transactionIsValid, setTransactionIsValid] = useState(false);
+  const [transactionSuccessful, setTransactionSuccessful] = useState(false);
 
   const [timeoutId, setTimeoutId] = useState(null);
+
+  const [hasError, setHasError] = useState(false);
+  const [error, setError] = useState('');
+  const renderErrorMessage = () => <ErrorMessage hasError={hasError} message={error} />;
+  const renderSuccessMessage = () =>
+    transactionSuccessful ? (
+      <p style={{ color: 'green' }}>Transaction successful</p>
+    ) : (
+      <p style={{ visibility: 'hidden' }}>...</p>
+    );
 
   useEffect(() => {
     if (amountIsValid && symbolIsValid) {
@@ -23,7 +42,7 @@ const TradeForm = ({ cash, symbols, addStock }) => {
 
   const validateSymbol = () => {
     const formated = symbol.replace(/ /g, '').toUpperCase();
-    console.log('running');
+
     if (isSymbolPresent(symbols, formated)) {
       setSymbolIsValid(true);
     } else {
@@ -32,8 +51,13 @@ const TradeForm = ({ cash, symbols, addStock }) => {
   };
 
   const validateAmount = () => {
-    console.log('value vaidated');
-    if (Number(amount) % 1 === 0) {
+    const value = Number(amount);
+
+    if (isNaN(value)) {
+      setAmountIsValid(false);
+      return;
+    }
+    if (value % 1 === 0) {
       setAmountIsValid(true);
     } else {
       setAmountIsValid(false);
@@ -55,16 +79,22 @@ const TradeForm = ({ cash, symbols, addStock }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (!transactionIsValid) return;
+    if (!transactionIsValid) {
+      setHasError(true);
+      setError('Transaction is not valid');
+    }
     const formatedSymbol = symbol.replace(/ /g, '').toUpperCase();
     const formatedAmount = Number(amount);
     buyStock(formatedSymbol, formatedAmount)
       .then(({ data }) => {
-        console.log(data);
+        setHasError(false);
+        setTransactionSuccessful(true);
+        addStock(data);
         resetForm();
-        handleSuccessfulTransaction(data);
       })
       .catch(err => {
+        setHasError(true);
+        setError('Error in transaction. Try again later.');
         resetAmount();
         setTransactionIsValid(false);
         setAmountIsValid(false);
@@ -72,9 +102,16 @@ const TradeForm = ({ cash, symbols, addStock }) => {
       });
   };
 
-  const handleSuccessfulTransaction = stock => {
-    addStock(stock);
-  };
+  useEffect(() => {
+    async function getNewStockData() {
+      const stocks = Object.keys(portfolio);
+      const { data: currentPrices } = await getCurrentPrices(stocks);
+      setCurrentPrices(currentPrices);
+      const { data: openingPrices } = await getOpeningPrices(stocks);
+      setOpeningPrices(openingPrices);
+    }
+    getNewStockData();
+  }, [cash]);
 
   const handleError = () => {};
 
@@ -107,6 +144,8 @@ const TradeForm = ({ cash, symbols, addStock }) => {
         >
           Buy
         </button>
+        {renderErrorMessage()}
+        {renderSuccessMessage()}
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ErrorMessage from '../Errors/index';
 import { useInput } from '../../hooks/input-hooks';
 import { registerUser } from '../../auth/index';
 
@@ -12,10 +13,14 @@ const SignUp = ({ setShowLogin, handleSuccessAuth }) => {
     bind: bindConfPassword,
     reset: resetConfPassword,
   } = useInput('');
+  const [hasError, setHasError] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
     if (password !== confPassword) {
+      setError('Passwords must be equal');
+      setHasError(true);
       resetPassword();
       resetConfPassword();
       return;
@@ -27,6 +32,8 @@ const SignUp = ({ setShowLogin, handleSuccessAuth }) => {
       })
       .catch(err => console.error(err.message));
   };
+
+  const renderErrorMessage = () => <ErrorMessage hasError={hasError} message={error} />;
 
   return (
     <div id="sign-up-container">
@@ -51,6 +58,7 @@ const SignUp = ({ setShowLogin, handleSuccessAuth }) => {
       <button id="redirect-to-login" onClick={() => setShowLogin(true)}>
         Log In
       </button>
+      {renderErrorMessage()}
     </div>
   );
 };
