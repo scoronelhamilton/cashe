@@ -29,14 +29,6 @@ app.get('*', (req, res) => {
   res.sendFile(ROOT_FILE);
 });
 
-app.listen(PORT, err => {
-  if (err) console.error(err.message);
-
-  if (process.env.NODE_ENV !== 'test') {
-    console.log(`Server listening on port ${PORT}...`);
-  }
-});
-
 // Initialization
 db.connect()
   .then(() => {
