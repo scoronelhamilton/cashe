@@ -76,6 +76,8 @@ const TradeForm = ({ cash, symbols, addStock }) => {
     addStock(stock);
   };
 
+  const handleError = () => {};
+
   return (
     <div id="trade-form-container">
       <h3>{cash ? `Wallet: ${convertToCurrency(cash)}` : ''}</h3>
@@ -93,14 +95,12 @@ const TradeForm = ({ cash, symbols, addStock }) => {
           <input
             type="text"
             placeholder="e.g. 50"
-            disabled={!symbolIsValid}
             onKeyUp={() => handleKeyUp(validateAmount)}
             {...bindAmount}
           />
         </form>
         <button
           className="buy-btn"
-          onClick={() => console.log('clicked')}
           type="submit"
           form="buy-form"
           disabled={!transactionIsValid}
