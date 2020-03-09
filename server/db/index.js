@@ -11,7 +11,4 @@ mongoose
     console.log(host);
     console.log('Connected to MongoDB');
   })
-  .catch(err => {
-    console.log('MONGO_URI', host);
-    console.error(err);
-  });
+  .catch(err => console.error(err));
