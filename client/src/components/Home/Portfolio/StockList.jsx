@@ -8,7 +8,7 @@ const StockList = ({ portfolio, openingPrices }) => {
     return (
       <tr className="stock-list-headers stock-list-row">
         {headers.map((header, i) => (
-          <th key={`${header}_${i}`} className="stock-list-table-header">
+          <th key={`${header}_${i}`} className="table-header">
             {header}
           </th>
         ))}
