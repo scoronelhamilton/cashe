@@ -10,7 +10,7 @@ const router = require('./routes/routes');
 const db = require('./db/index');
 
 const app = express();
-// const httpServer = http.createServer(app);
+const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 8080;
 
 const APP_DIRECTORY = path.join(__dirname, '../client/dist');
@@ -37,26 +37,26 @@ app.listen(PORT, err => {
   }
 });
 
-// db.connect()
-//   .then(() => {
-// httpServer.listen(PORT, e => {
-//   if (e) throw new Error(e.message);
+// Initialization
+db.connect()
+  .then(() => {
+    httpServer.listen(PORT, err => {
+      if (err) throw new Error(err);
 
-//   if (process.env.NODE_ENV !== 'test') {
-//     console.log(`Server listening on port ${PORT}...`);
-//   }
-// });
-// })
-// .catch(e => console.error(e));
+      if (process.env.NODE_ENV !== 'test') {
+        console.log(`Server listening on port ${PORT}...`);
+      }
+    });
+  })
+  .catch(e => console.error(e.message));
 
-// Shutdown
-// const shutdownGracefully = () => {
-//   console.log('Initializing shutdown...');
-//   // db.disconnect()
-//   //   .catch(e => console.error(e))
-//   //   .finally(() => httpServer.close(() => console.log('Server shut down')));
-//   httpServer.close();
-// };
+//Shutdown;
+const shutdownGracefully = () => {
+  console.log('Initializing shutdown...');
+  db.disconnect()
+    .catch(e => console.error(e))
+    .finally(() => httpServer.close(() => console.log('Server shut down')));
+};
 
-// process.on('SIGINT', shutdownGracefully);
-// process.on('SIGTERM', shutdownGracefully);
+process.on('SIGINT', shutdownGracefully);
+process.on('SIGTERM', shutdownGracefully);
