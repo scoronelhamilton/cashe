@@ -1,4 +1,3 @@
-import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import Store from 'store';
 

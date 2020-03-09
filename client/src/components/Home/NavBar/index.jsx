@@ -1,6 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { logOut } from '../../../api/auth';
 
 const NavBar = ({ setShowPortfolio }) => {
+  const history = useHistory();
+  const handleLogOut = () => {
+    history.push('/login');
+    logOut();
+  };
   return (
     <div id="navbar">
       <div className="navbar-wrapper">
