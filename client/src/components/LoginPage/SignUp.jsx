@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ErrorMessage from '../Errors/index';
 import { useInput } from '../../hooks/input-hooks';
-import { registerUser } from '../../auth/index';
+import { registerUser } from '../../api/auth';
 
 const SignUp = ({ setShowLogin, handleSuccessAuth }) => {
   const { value: name, bind: bindName, reset: resetName } = useInput('');

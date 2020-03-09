@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { saveToken, setHeaders } from '../../auth/index';
+import { saveToken, setHeaders } from '../../api/auth';
 import LogIn from './Login.jsx';
 import SignUp from './SignUp.jsx';
 

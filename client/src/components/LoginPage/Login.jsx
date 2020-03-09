@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ErrorMessage from '../Errors/index';
 import { useInput } from '../../hooks/input-hooks';
-import { logIn } from '../../auth/index';
+import { logIn } from '../../api/auth';
 
 const LogIn = ({ setShowLogin, handleSuccessAuth }) => {
   const { value: email, bind: bindEmail, reset: resetEmail } = useInput('');
