@@ -3,21 +3,21 @@ import { convertToCurrency, formatDate } from '../../../helpers/index';
 
 const TransactionList = ({ transactions }) => {
   const getHeaders = () => {
+    const headers = ['Date', 'Type', 'Symbol', 'Shares', 'Price', 'Net Value'];
     return (
       <tr>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Symbol</th>
-        <th>Shares</th>
-        <th>Price</th>
-        <th>Net Value</th>
+        {headers.map((header, i) => (
+          <th className="table-header" key={`${header}_${i}`}>
+            {header}
+          </th>
+        ))}
       </tr>
     );
   };
   const getTransaction = txn => {
     const { _id, date, type, symbol, amount, price, netValue } = txn;
     return (
-      <tr key={_id}>
+      <tr key={_id} className="transaction-row">
         <td>{formatDate(date)}</td>
         <td>{type.toUpperCase()}</td>
         <td>{symbol.toUpperCase()}</td>
@@ -29,8 +29,8 @@ const TransactionList = ({ transactions }) => {
   };
 
   return (
-    <div>
-      <table>
+    <div className="transaction-table-wrapper">
+      <table className="transaction-table">
         <thead>{getHeaders()}</thead>
         <tbody>{transactions.map(txn => getTransaction(txn))}</tbody>
       </table>
