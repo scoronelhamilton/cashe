@@ -22,3 +22,5 @@ Add these variables to a .env file to access the stock data and encrypt user inf
 * AUTH_SECRET
 * IEX_TOKEN
 * ALPHA_VANTAGE_TOKEN
+
+        IMPORTANT: The Alpha Vantage API has a quota of ~5 requests per minute. Please avoid excesive reloading.
