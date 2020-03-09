@@ -18,7 +18,6 @@ export default (state = initialState, action) => {
     case 'SET_CURRENT_PRICES': {
       const stocks = action.payload;
       const { portfolio } = state;
-
       let newPortfolioValue = 0;
       const newPortfolio = {};
       for (let stock of stocks) {
@@ -46,7 +45,7 @@ export default (state = initialState, action) => {
       if (!stock) {
         newStock = { symbol, amount };
       } else {
-        newStock = { ...stock, amount: stock[amount] + amount };
+        newStock = { ...stock, amount: stock.amount + amount };
       }
 
       const newPortfolio = { ...portfolio, [symbol]: newStock };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import LoginPage from '../components/LoginPage/index';
 import HomeContainer from '../containers/Home';
-import { verifyUser, setHeaders } from '../auth/index';
+import { verifyUser, setHeaders } from '../api/auth';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
