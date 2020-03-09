@@ -29,7 +29,7 @@ app.get('*', (req, res) => {
   res.sendFile(ROOT_FILE);
 });
 
-// Initialization
+// Initialization;
 db.connect()
   .then(() => {
     httpServer.listen(PORT, err => {

@@ -15,15 +15,14 @@ const LoginPage = ({ setRedirect }) => {
     history.push('/');
   };
 
-  return (
-    <>
-      {showLogin ? (
-        <LogIn setShowLogin={setShowLogin} handleSuccessAuth={handleSuccessAuth} />
-      ) : (
-        <SignUp setShowLogin={setShowLogin} handleSuccessAuth={handleSuccessAuth} />
-      )}
-    </>
-  );
+  const renderForm = () =>
+    showLogin ? (
+      <LogIn setShowLogin={setShowLogin} handleSuccessAuth={handleSuccessAuth} />
+    ) : (
+      <SignUp setShowLogin={setShowLogin} handleSuccessAuth={handleSuccessAuth} />
+    );
+
+  return <div id="login-page-wrapper">{renderForm()}</div>;
 };
 
 export default LoginPage;

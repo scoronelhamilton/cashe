@@ -194,6 +194,137 @@ body,
 
 /*
 
+  _     ___   ____ ___ _   _ 
+ | |   / _ \ / ___|_ _| \ | |
+ | |  | | | | |  _ | ||  \| |
+ | |__| |_| | |_| || || |\  |
+ |_____\___/ \____|___|_| \_|
+                             
+
+*/
+
+#login-page-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  position: relative;
+}
+
+#login-container {
+  width: 30%;
+  height: 50%;
+}
+
+#login-page-wrapper h2 {
+  font-size: 1.8em;
+  font-weight: 500;
+  color: white;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px black inset !important;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: white !important;
+}
+
+#login-page-wrapper input {
+  margin-bottom: 3.5%;
+  padding: 3%;
+  font-weight: 400;
+  font-size: 0.9em;
+  color: white;
+  border-bottom: solid;
+  border-color: white;
+  border-width: 0.1em;
+  background-color: black;
+}
+
+#login-container input:focus {
+  border-width: 0.12em;
+}
+
+#login-container input::placeholder {
+  font-size: 1em;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 5% 0 10% 0;
+}
+
+.login-buttons-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-buttons-section span {
+  font-size: 0.8em;
+  text-align: center;
+  margin: 2.5% 0;
+  color: white;
+}
+
+.login-page-button {
+  padding: 3%;
+  font-size: 0.8em;
+  font-weight: 400;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  border-style: solid;
+  border-color: white;
+  border-width: 0.1em;
+}
+
+.login-page-button:hover {
+  background-color: rgba(75, 72, 72, 0.37);
+}
+
+#redirect-to-login {
+  background-color: black;
+  position: absolute;
+  top: 5%;
+  right: 3%;
+  padding: 2% 4%;
+  font-size: 1.2em;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: white;
+  font-weight: 400;
+  padding: 2% 4%;
+}
+
+/* SIGN UP */
+
+#sign-up-container {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#sign-up-form {
+  display: flex;
+  flex-direction: column;
+  margin: 5% 0 9% 0;
+}
+
+/*
+
   ____            _    __       _ _       
  |  _ \ ___  _ __| |_ / _| ___ | (_) ___  
  | |_) / _ \| '__| __| |_ / _ \| | |/ _ \ 
@@ -275,6 +406,11 @@ body,
 
 .buy-btn:hover {
   background-color: rgba(0, 30, 255, 1);
+}
+
+.buy-btn:disabled {
+  background-color: grey;
+  cursor: auto;
 }
 
 #overview-container .buy-btn {
@@ -424,6 +560,7 @@ tr:hover {
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-bottom: 4%;
 }
 .trade-form input {
   margin-bottom: 3.5%;

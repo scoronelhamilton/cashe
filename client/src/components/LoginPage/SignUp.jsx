@@ -30,15 +30,27 @@ const SignUp = ({ setShowLogin, handleSuccessAuth }) => {
 
   return (
     <div id="sign-up-container">
+      <h2>
+        Welcome to C A S H <span>È</span>
+      </h2>
       <form id="sign-up-form" onSubmit={e => handleSubmit(e)}>
-        <input placeholder="Name" {...bindName} />
-        <input placeholder="Last Name" {...bindLastName} />
-        <input placeholder="Email" {...bindEmail} />
-        <input placeholder="Password" type="password" {...bindPassword} />
+        <input type="text" placeholder="Name" {...bindName} />
+        <input type="text" placeholder="Last Name" {...bindLastName} />
+        <input type="text" placeholder="Email" {...bindEmail} />
+        <input
+          placeholder="Password"
+          type="password"
+          autoComplete="new-password"
+          {...bindPassword}
+        />
         <input placeholder="Confirm Password" type="password" {...bindConfPassword} />
       </form>
-      <button form="sign-up-form">Sign Up</button>
-      <button onClick={() => setShowLogin(true)}>Log In</button>
+      <button className="login-page-button" form="sign-up-form">
+        Sign Up
+      </button>
+      <button id="redirect-to-login" onClick={() => setShowLogin(true)}>
+        Log In
+      </button>
     </div>
   );
 };
