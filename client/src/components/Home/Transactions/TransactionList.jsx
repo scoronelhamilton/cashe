@@ -6,8 +6,10 @@ const TransactionList = ({ transactions }) => {
     const headers = ['Date', 'Type', 'Symbol', 'Shares', 'Price', 'Net Value'];
     return (
       <tr>
-        {headers.map(header => (
-          <th className="table-header">{header}</th>
+        {headers.map((header, i) => (
+          <th className="table-header" key={`${header}_${i}`}>
+            {header}
+          </th>
         ))}
       </tr>
     );
